@@ -6,9 +6,13 @@ Draw::Draw()
 {
 }
 
-void Draw::BoxDraw(int Start_x, int Start_y, int Width, int Height)
+void Draw::DrawMidText(string str, int x, int y)
 {
-
+	if (x > str.size() / 2)
+		x -= str.size() / 2;
+	gotoxy(x, y);
+	cout << str;
+	return;
 }
 
 Draw::~Draw()
