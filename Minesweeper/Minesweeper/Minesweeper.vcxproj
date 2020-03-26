@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
-    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -149,7 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
-    <ClInclude Include="Control.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Draw.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapFactory.h" />

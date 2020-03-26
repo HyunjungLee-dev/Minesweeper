@@ -16,10 +16,12 @@ None::None()
 	m_eblockType = BLOCKTYPE_NONE;
 }
 
-void None::DrawBlock()
+void None::DrawBlock(bool benter)
 {
-
-	Bdraw.DrawPoint("бр", m_ix+1, m_iy+1);
+	if (benter == true)
+		Bdraw.ErasePoint(m_ix + 1, m_iy + 1);
+	else
+		Bdraw.DrawPoint("бр", m_ix+1, m_iy+1);
 }
 
 void None::SetBlock(int x, int y)
@@ -39,10 +41,12 @@ Flag::Flag()
 	m_eblockType = BLOCKTYPE_FLAG;
 }
 
-void Flag::DrawBlock()
+void Flag::DrawBlock(bool benter)
 {
-	Bdraw.ErasePoint(m_ix+1, m_iy+1);
-	Bdraw.DrawPoint("б┌", m_ix+1, m_iy+1);
+	if (benter == true)
+		Bdraw.DrawPoint("б┌", m_ix+1, m_iy+1);
+	else
+		Bdraw.DrawPoint("бр", m_ix + 1, m_iy + 1);
 }
 
 void Flag::SetBlock(int x, int y)
@@ -57,38 +61,17 @@ Flag::~Flag()
 }
 
 
-
-Qmark::Qmark()
-{
-	m_eblockType = BLOCKTYPE_QMARK;
-}
-
-void Qmark::DrawBlock()
-{
-	Bdraw.ErasePoint(m_ix+1, m_iy+1 );
-	Bdraw.DrawPoint("г┐", m_ix+1, m_iy+1);
-}
-
-void Qmark::SetBlock(int x, int y)
-{
-	m_ix = x;
-	m_iy = y;
-}
-
-
-Qmark::~Qmark()
-{
-}
-
 Mine::Mine()
 {
 	m_eblockType = BLOCKTYPE_MINE;
 }
 
-void Mine::DrawBlock()
+void Mine::DrawBlock(bool benter)
 {
-	Bdraw.ErasePoint(m_ix +1 , m_iy+1 );
-	Bdraw.DrawPoint("б▌", m_ix+1 , m_iy+1 );
+	if (benter == true)
+	 Bdraw.DrawPoint("б▌", m_ix+1 , m_iy+1 );
+	else
+		Bdraw.DrawPoint("бр", m_ix + 1, m_iy + 1);
 }
 
 void Mine::SetBlock(int x, int y)

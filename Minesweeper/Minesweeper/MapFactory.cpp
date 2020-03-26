@@ -21,10 +21,6 @@ Flag* MapFactory::makeFlag()
 	return new Flag();
 }
 
-Qmark* MapFactory::makeQmark()
-{
-	return new Qmark();
-}
 
 Mine* MapFactory::makeMine()
 {
@@ -33,4 +29,5 @@ Mine* MapFactory::makeMine()
 
 MapFactory::~MapFactory()
 {
+
 }

@@ -9,7 +9,6 @@ public:
 	Map* makeMap();
 	None* makeNone();
 	Flag* makeFlag();
-	Qmark* makeQmark();
 	Mine* makeMine();
 };
 
