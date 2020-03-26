@@ -143,12 +143,16 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapFactory.cpp" />
     <ClCompile Include="Minesweeper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapFactory.h" />
     <ClInclude Include="Mecro.h" />
     <ClInclude Include="Minesweeper.h" />
   </ItemGroup>

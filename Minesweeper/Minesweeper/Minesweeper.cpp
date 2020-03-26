@@ -6,15 +6,31 @@ Minesweeper::Minesweeper():m_iHeight(0),m_iWidth(0)
 {
 }											 
 
-void Minesweeper::Init(START_TYPE type)
+void Minesweeper::Init()
 {
-	if (type == LEVELSELECT)
+	system("cls");
+
+	if (m_eType == TYPE_BEGINNER)
+	{
+		m_iWidth = 9; m_iHeight = 9;
+	}
+	else if (m_eType == TYPE_INTERMEDIATE)
+	{
+		m_iWidth = 16; m_iHeight = 16;
+	}
+	else if (m_eType == TYPE_ADVANCED)
+	{
+		m_iWidth = 30; m_iHeight = 16;
+	}
+	else if (m_eType == TYPE_CUSTOM)
+	{
 		;
-	else if (type == CUSTOMSELECT)
-		;
+	}
+	CreateMap();
+	PrintMap();
 }
 
-SELECT_TYPE Minesweeper::Tilte()
+void Minesweeper::Tilte()
 {
 	int Select;
 
@@ -30,21 +46,53 @@ SELECT_TYPE Minesweeper::Tilte()
 	draw.DrawMidText("5.exit", x, y + 12);
 	draw.DrawMidText("select : ", x, y + 14);
 	cin >> Select;
-	return (SELECT_TYPE)Select;
+	m_eType = (SELECT_TYPE)Select;
 
 }
 
+void  Minesweeper::CreateMap()
+{
+	map = factory->makeMap();
+
+	for (int x = 0; x < m_iWidth; x++)
+	{
+		for (int y = 0; y < m_iHeight; y++)
+		{
+			Block* block;
+			block = factory->makeNone();
+			block->SetBlock(x,y);
+			map->AddBlock(block);
+		}
+	}
+}
+
+void Minesweeper::PrintMap()
+{
+
+	map->Print();
+}
+
+void Minesweeper::Play()
+{
+	while (1)
+	{
+		control.PosControl(m_iWidth, m_iHeight);
+	}
+}
+
+
+
 void Minesweeper::Display()
 {
-	switch (Tilte())
+	Tilte();
+	switch (m_eType)
 	{
 	case TYPE_BEGINNER:
-		break;
 	case TYPE_INTERMEDIATE:
-		break;
 	case TYPE_ADVANCED:
-		break;
 	case TYPE_CUSTOM:
+		Init();
+		Play();
 		break;
 	case TYPE_EXIT:
 		return;
@@ -57,4 +105,5 @@ void Minesweeper::Display()
 
 Minesweeper::~Minesweeper()
 {
+	delete factory;
 }

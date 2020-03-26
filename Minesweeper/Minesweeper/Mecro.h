@@ -6,3 +6,10 @@
 #include<conio.h>
 #include<list>
 using namespace std;
+inline void gotoxy(int x, int y)
+{
+	COORD Pos = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+#define CONSOLE_W  80
+#define CONSOLE_H  30
