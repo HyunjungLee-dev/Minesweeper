@@ -10,6 +10,20 @@ void Map::AddBlock(Block* block)
 {
 	m_iNoneCount++;
 	map.push_back(block);
+}	
+
+void Map::StartBlock(int x, int y, int w, int h)
+{	
+	
+
+	if (x < 0 || y < 0 || x > w || y >h)
+		return;
+	else if (CheckBlock(x, y) == true)
+	{ 
+		StartBlock(x+1,y,w,h);
+	}
+	else
+		return;
 }
 
 void Map::ChageBlock(Block* block)
@@ -54,25 +68,26 @@ bool Map::CheckBlock(int x, int y)
 {
 	list<Block*>::iterator begin = map.begin();
 	list<Block*>::iterator end = map.end();
+
 	if (!map.empty())
 	{
 		while (begin != end)
 		{
 			if ((*begin)->GetX() == x && (*begin)->GetY() == y)
 			{
-				(*begin)->DrawBlock(true);
-				m_iNoneCount--;
 				if ((*begin)->GetType() == BLOCKTYPE_MINE)
 				{
 					return false;
 				}
+				(*begin)->DrawBlock(true);
+				m_iNoneCount--;
 				SearchMine(x, y);
 				break;
 			}
 			begin++;
 		}
+		return true;
 	}
-	return true;
 }
 
 

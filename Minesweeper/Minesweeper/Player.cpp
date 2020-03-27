@@ -13,14 +13,20 @@ void Player::PlayerInit()
 	m_iy = 0;
 	m_bGOver = false;
 	m_iFlagCount = 0;
+	m_bStart = false;
 }
 
 void Player::Control(int w, int h, Map* map)
 {
 		int ch = getch();
 		if (ch == ENTER)
-		{
-				if (map->CheckBlock(m_ix, m_iy) == false)
+		{				
+			if (m_bStart == false)
+			{
+				map->StartBlock(m_ix, m_iy, w, h);
+				m_bStart = true;
+			}
+			if (map->CheckBlock(m_ix, m_iy) == false)
 					m_bGOver =  true;
 		}
 		if (ch == SPACE)
