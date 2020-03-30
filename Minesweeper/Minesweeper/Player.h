@@ -20,7 +20,6 @@ class Player
 	int m_iy; 
 	int m_iFlagCount;
 	bool m_bGOver;
-	bool m_bStart;
 	MapFactory*  factory;
 	list<Block*> FlagList ;
 public:

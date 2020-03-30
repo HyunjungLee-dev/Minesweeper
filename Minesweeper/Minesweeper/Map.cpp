@@ -12,19 +12,8 @@ void Map::AddBlock(Block* block)
 	map.push_back(block);
 }	
 
-void Map::StartBlock(int x, int y, int w, int h)
-{	
-	
 
-	if (x < 0 || y < 0 || x > w || y >h)
-		return;
-	else if (CheckBlock(x, y) == true)
-	{ 
-		StartBlock(x+1,y,w,h);
-	}
-	else
-		return;
-}
+
 
 void Map::ChageBlock(Block* block)
 {
@@ -64,7 +53,7 @@ void Map::Print(bool benter)
 	}
 }
 
-bool Map::CheckBlock(int x, int y)
+bool Map::CheckBlock(int x, int y,int w, int h)
 {
 	list<Block*>::iterator begin = map.begin();
 	list<Block*>::iterator end = map.end();
@@ -79,10 +68,24 @@ bool Map::CheckBlock(int x, int y)
 				{
 					return false;
 				}
-				(*begin)->DrawBlock(true);
-				m_iNoneCount--;
-				SearchMine(x, y);
-				break;
+				else
+				{
+					(*begin)->DrawBlock(true);
+					m_iNoneCount--;
+					if (SearchMine(x, y) == 0)
+					{
+						for (int i = -1; i <= 1; i++)
+						{
+							for (int j = -1; j <= 1; j++)
+							{
+								if (CheckBlock(x + i, y + j, w, h) == true || (x+i < 0 || y+j < 0 || x+i > w || y +j>h))
+									break;
+							}
+						}
+					}
+					else
+						return true;
+				}
 			}
 			begin++;
 		}
@@ -91,7 +94,7 @@ bool Map::CheckBlock(int x, int y)
 }
 
 
-void Map::SearchMine(int x, int y)
+int Map::SearchMine(int x, int y)
 {
 	list<Block*>::iterator begin = map.begin();
 	list<Block*>::iterator end = map.end();
@@ -115,9 +118,12 @@ void Map::SearchMine(int x, int y)
 			begin++;
 		}
 		if (mineNum == 0)
-			return;
+			return mineNum;
 		else
-			draw.DrawPoint(to_string(mineNum),x + 1, y + 1);
+		{
+			draw.DrawPoint(to_string(mineNum), x + 1, y + 1);
+			return mineNum;
+		}
 	}
  }
 
