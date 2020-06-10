@@ -29,6 +29,7 @@ class Minesweeper
 	bool Gameover;
 	 int m_iWidth;
 	 int m_iHeight;
+
 	 int m_iMineNum;
 public:
 	void Display();	  
