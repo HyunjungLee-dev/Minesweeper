@@ -6,10 +6,9 @@ class Map
 	vector<Block*> m_pMap;
 	BlockFactory* m_pFactory;
 
-	int m_iMineCount;
 	int m_iNoneCount;
-
 	bool m_MineCheck;
+
 
 	HDC m_backbufferDC;
 	POS m_BlockPos;

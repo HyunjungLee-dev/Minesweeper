@@ -12,11 +12,7 @@ None* BlockFactory::MakeNone()
 	return new None();
 }
 
-//Click* BlockFactory::MakeClick()
-//{
-//	return new Click();
-//}
-//
+
 Number* BlockFactory::MakeNumber(IMG type)
 {
 	return new Number(type);

@@ -47,3 +47,17 @@ enum IMG
 
 	IMG_END = 13,
 };
+
+
+
+enum GAMESTATE
+{
+	GAME_WAIT,
+	GAME_INIT,
+	GAME_START,
+	GAME_STOP,
+	GAME_DIE,
+	GAME_RE,
+	GAME_PLAY,
+	GAME_END
+};

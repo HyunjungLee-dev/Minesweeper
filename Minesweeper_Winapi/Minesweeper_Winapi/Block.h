@@ -31,16 +31,6 @@ public:
 	virtual ~None() {};
 };
 
-//class Click : public Block
-//{
-//public:
-//	virtual void DrawBlock(HDC hdc);
-//	virtual void SetBlock();
-//
-//	Click();
-//	virtual ~Click() {};
-//};
-//
 
 class Number : public Block
 {

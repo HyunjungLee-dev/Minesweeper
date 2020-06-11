@@ -4,7 +4,6 @@
 
 Map::Map() 
 {
-	m_iMineCount = 0;
 	m_iNoneCount = 0;
 }
 
@@ -12,6 +11,7 @@ void Map::Init(int startX, int startY,HDC hdc)
 {
 	m_backbufferDC = hdc;
 	m_MineCheck = false;
+
 
 	for (int x = 1; x <= WIDTH; x++)
 	{
@@ -38,7 +38,6 @@ void Map::Init(int startX, int startY,HDC hdc)
 		int randy = startY  + BitmapManager::GetSingleton()->GetImg(block->GetType())->GetSize().cy * (rand() % 16);
 		block->Setpos(randx, randy);
 		ChageBlock(block);
-		m_iMineCount++;
 	}
 }
 

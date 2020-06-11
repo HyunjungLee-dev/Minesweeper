@@ -36,9 +36,6 @@
     <ClCompile Include="BlockFactory.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DlgClient.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Minesweeper_Winapi.rc">
@@ -71,9 +68,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="BlockFactory.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DlgClient.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

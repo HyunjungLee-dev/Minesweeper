@@ -1,6 +1,7 @@
 #include"GameManager.h"
 #include"resource.h"
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK EndDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = TEXT("Áö·Ú Ã£±â");
 
@@ -61,6 +62,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_LBUTTONDOWN:
 		g_game.Collision(pos);
+		if (g_game.StateCheck() == GAME_DIE)
+			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, EndDlgProc);
 		return 0;
 	case WM_RBUTTONDOWN:
 		g_game.PutFlag(pos);
@@ -81,4 +84,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		return 0;
 	}
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}
+
+BOOL CALLBACK EndDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+
 }

@@ -5,7 +5,6 @@ class BlockFactory
 {
 public:
 	None* MakeNone();
-	//Click* MakeClick();
 	Number* MakeNumber(IMG type);
 	Flag* MakeFlag();
 	Mine* MakeMine();

@@ -8,7 +8,15 @@ private:
 	RECT m_ClientRct;
 
 	int m_iFlagCount;
-	bool m_bGOver;
+	int  m_iMineCount;
+
+	int m_SecTime;
+	DWORD	m_dwLastTime;
+	DWORD	m_dwCurTime;
+	float	m_fDeltaTime;
+
+	GAMESTATE m_eState;
+
 	BlockFactory*  m_factory;
 	vector<Block*> m_FlagList;
 
@@ -21,11 +29,12 @@ public:
 	void Update();
 	void Collision(POINT pos);
 	void PutFlag(POINT pos);
-
+	GAMESTATE StateCheck();
 
 	//Render
 	void Render();
 	void FlagRender();
+	void Text();
 
 	//Release
 	void Release();

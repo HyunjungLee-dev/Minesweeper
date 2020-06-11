@@ -30,7 +30,7 @@ Block::~Block()
 
 
 
-void None::DrawBlock(HDC hdc)		// NONE -> CLICK  Draw의 변화
+void None::DrawBlock(HDC hdc)	
 {
 	if (!m_bClick)
 		BitmapManager::GetSingleton()->GetImg(IMG_BLOCK)->Draw(hdc, m_pos.m_fX, m_pos.m_fY);
@@ -38,25 +38,7 @@ void None::DrawBlock(HDC hdc)		// NONE -> CLICK  Draw의 변화
 		BitmapManager::GetSingleton()->GetImg(IMG_BLOCK_CLICK)->Draw(hdc, m_pos.m_fX, m_pos.m_fY);
 }
 
-//Click::Click()
-//{
-//	m_eblockType = IMG_BLOCK_CLICK;
-//
-//	float SizeX = m_pos.m_fX + BitmapManager::GetSingleton()->GetImg(m_eblockType)->GetSize().cx;
-//	float SizeY = m_pos.m_fY + BitmapManager::GetSingleton()->GetImg(m_eblockType)->GetSize().cy;
-//
-//	m_blockRect.left = m_pos.m_fX;
-//	m_blockRect.right = SizeX;
-//	m_blockRect.top = m_pos.m_fY;
-//	m_blockRect.bottom = SizeY;
-//
-//}
-//
-//void Click::DrawBlock(HDC hdc)
-//{
-//	BitmapManager::GetSingleton()->GetImg(IMG_BLOCK_CLICK)->Draw(hdc, m_pos.m_fX, m_pos.m_fY);
-//}
-//
+
 
 void Number::DrawBlock(HDC hdc)
 {
