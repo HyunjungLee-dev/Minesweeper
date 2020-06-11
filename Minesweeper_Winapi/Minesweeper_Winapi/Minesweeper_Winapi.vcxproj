@@ -143,11 +143,11 @@
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="BitmapManager.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="DlgClient.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="MineMain.cpp" />
-    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Minesweeper_Winapi.rc" />
@@ -156,11 +156,11 @@
     <ClInclude Include="Bitmap.h" />
     <ClInclude Include="BitmapManager.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="DlgClient.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Mecro.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Singleton.h" />
   </ItemGroup>

@@ -7,7 +7,10 @@ private:
 	HDC m_backbufferDC;
 	RECT m_ClientRct;
 
-	bool m_bGameover;
+	int m_iFlagCount;
+	bool m_bGOver;
+	BlockFactory*  m_factory;
+	vector<Block*> m_FlagList;
 
 	Map m_Map;
 public:
@@ -22,7 +25,7 @@ public:
 
 	//Render
 	void Render();
-
+	void FlagRender();
 
 	//Release
 	void Release();

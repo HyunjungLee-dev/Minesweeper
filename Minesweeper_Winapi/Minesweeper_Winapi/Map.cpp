@@ -11,6 +11,7 @@ Map::Map()
 void Map::Init(int startX, int startY,HDC hdc)
 {
 	m_backbufferDC = hdc;
+	m_MineCheck = false;
 
 	for (int x = 1; x <= WIDTH; x++)
 	{
@@ -143,23 +144,48 @@ int Map::SearchMine(int x, int y)
 			Block* block;
 			block = m_pFactory->MakeNumber((IMG)mineNum);
 			block->Setpos(x, y);
+			block->SetClick(true);
 			ChageBlock(block);
 			return mineNum;
 		}
 	}
 }
 
-bool Map::Collision(POINT pos)
+bool Map::Collision(POINT pos, MOUSE button)
 {
 	for (int i = 0; i < m_pMap.size(); i++)
 	{
 		if (PtInRect(&m_pMap.at(i)->GetRct(), pos))
 		{
-			if (!CheckBlock(m_pMap.at(i)->GetPos().m_fX, m_pMap.at(i)->GetPos().m_fY))
-				return false;
+			if (button == LBUTTONDOWN)
+			{
+				if (!CheckBlock(m_pMap.at(i)->GetPos().m_fX, m_pMap.at(i)->GetPos().m_fY))
+				{
+					return false;
+				}
+
+			}
+			else
+			{
+				if (!m_pMap.at(i)->GetClick())
+				{
+					m_BlockPos = m_pMap.at(i)->GetPos();
+					return true;
+				}
+				else
+					return false;
+			}
 		}
 	}
+}
 
+void Map::OpenMine()
+{
+	for (int i = 0; i < m_pMap.size(); i++)
+	{
+		if(m_pMap.at(i)->GetType() == IMG_MINE)
+			m_pMap.at(i)->SetClick(true);
+	}
 }
 
 void Map::Render()

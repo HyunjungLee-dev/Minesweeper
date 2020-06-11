@@ -15,6 +15,7 @@ public:
 	IMG GetType() { return m_eblockType; }
 	POS GetPos() { return m_pos; }
 	RECT GetRct() { return m_blockRect; }
+	bool GetClick() { return m_bClick; }
 	void SetClick(bool click) { m_bClick = click; }
 	Block();
 	virtual ~Block();

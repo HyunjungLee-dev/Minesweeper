@@ -18,6 +18,12 @@ struct POS
 };
 
 
+enum MOUSE
+{
+	LBUTTONDOWN,
+	RBUTTONDOWN
+};
+
 //BitmapManager
 
 enum IMG

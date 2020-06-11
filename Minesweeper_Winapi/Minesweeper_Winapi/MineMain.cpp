@@ -54,13 +54,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	 POINT pos;
+	 pos.x = LOWORD(lParam);
+	 pos.y = HIWORD(lParam);
 
 	switch (iMessage)
 	{
 	case WM_LBUTTONDOWN:
-		pos.x = LOWORD(lParam);
-		pos.y = HIWORD(lParam);
 		g_game.Collision(pos);
+		return 0;
+	case WM_RBUTTONDOWN:
+		g_game.PutFlag(pos);
 		return 0;
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
