@@ -1,7 +1,8 @@
 #include"GameManager.h"
 #include"resource.h"
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK EndDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = TEXT("Áö·Ú Ã£±â");
 
@@ -45,6 +46,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 		{
 			//Update
 			g_game.Update();
+			if (g_game.StateCheck() == GAME_DIE)
+				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, EndDlgProc);
+			else if (g_game.StateCheck() == GAME_WIN)
+				DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG2), hWnd, WinDlgProc);
 		}
 
 	}
@@ -62,8 +67,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_LBUTTONDOWN:
 		g_game.Collision(pos);
-		if (g_game.StateCheck() == GAME_DIE)
-			DialogBox(g_hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, EndDlgProc);
 		return 0;
 	case WM_RBUTTONDOWN:
 		g_game.PutFlag(pos);
@@ -77,6 +80,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		case ID_ANOTHER:
 			ShellExecute(NULL, TEXT("open"), TEXT("https://www.microsoft.com/ko-kr/store/games/windows"), NULL, NULL, SW_SHOW);
 			break;
+		case ID_NEW:
+			g_game.ReStart(GAME_RESET);
+			break;
+		case ID_EXIT:
+			PostQuitMessage(0);
 		}
 		return 0;
 	case WM_DESTROY:
@@ -86,7 +94,50 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
 
-BOOL CALLBACK EndDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+BOOL CALLBACK EndDlgProc( HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	switch (uMsg)
+	{
+	case WM_INITDIALOG:
+		return TRUE;
 
+	case WM_COMMAND:
+		switch (wParam)
+		{
+		case IDC_BUTTON1:
+			PostQuitMessage(0);
+			return TRUE;
+		case IDC_BUTTON2:
+			g_game.ReStart(GAME_REPLAY);
+			EndDialog(hDlg, 0);
+			return TRUE;
+		case IDC_BUTTON3:
+			g_game.ReStart(GAME_RESET);
+			EndDialog(hDlg, 0);
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+BOOL CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_INITDIALOG:
+		return TRUE;
+
+	case WM_COMMAND:
+		switch (wParam)
+		{
+		case IDC_WINBUTTON1:
+			PostQuitMessage(0);
+			return TRUE;
+		case IDC_WINBUTTON2:
+			g_game.ReStart(GAME_RESET);
+			EndDialog(hDlg, 0);
+			return TRUE;
+		}
+	}
+	return FALSE;
 }

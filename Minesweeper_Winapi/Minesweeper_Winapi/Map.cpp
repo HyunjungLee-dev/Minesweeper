@@ -4,7 +4,6 @@
 
 Map::Map() 
 {
-	m_iNoneCount = 0;
 }
 
 void Map::Init(int startX, int startY,HDC hdc)
@@ -12,6 +11,8 @@ void Map::Init(int startX, int startY,HDC hdc)
 	m_backbufferDC = hdc;
 	m_MineCheck = false;
 
+	m_iNoneCount = 0;
+	m_iMineCount = 0;
 
 	for (int x = 1; x <= WIDTH; x++)
 	{
@@ -30,14 +31,28 @@ void Map::Init(int startX, int startY,HDC hdc)
 		}
 	}
 
-	for (int i = 0; i < DEFULTMINE; i++)
+	SetMine(startX, startY);
+}
+
+void Map::SetMine(int startX, int startY)
+{
+	while (m_iMineCount != DEFULTMINE)
 	{
-		Block* block;
-		block = m_pFactory->MakeMine();
-		int randx = startX  + BitmapManager::GetSingleton()->GetImg(block->GetType())->GetSize().cx * (rand() % 30);
-		int randy = startY  + BitmapManager::GetSingleton()->GetImg(block->GetType())->GetSize().cy * (rand() % 16);
-		block->Setpos(randx, randy);
-		ChageBlock(block);
+		int randx = startX + BitmapManager::GetSingleton()->GetImg(IMG_MINE)->GetSize().cx * (rand() % WIDTH);
+		int randy = startY + BitmapManager::GetSingleton()->GetImg(IMG_MINE)->GetSize().cy * (rand() % HEIGHT);
+
+		if ((randx >= m_pMap.front()->GetPos().m_fX && randx <= m_pMap.back()->GetPos().m_fX)
+			&& (randy >= m_pMap.front()->GetPos().m_fY && randy <= m_pMap.back()->GetPos().m_fY))
+		{
+			if (!SearchMine(randx, randy))
+			{
+				Block* block;
+				block = m_pFactory->MakeMine();
+				block->Setpos(randx, randy);
+				ChageBlock(block);
+				m_iMineCount++;
+			}
+		}
 	}
 }
 
@@ -63,16 +78,17 @@ void Map::ChageBlock(Block* block)
 
 }
 
-bool Map::CheckBlock(int x, int y)	  //營敝
+bool Map::CheckBlock(int x, int y)	  
 {
 	vector<Block*>::iterator iter = m_pMap.begin();
 	vector<Block*>::iterator end = m_pMap.end();
 
-	if (!m_pMap.empty())
+	if ((x >= m_pMap.front()->GetPos().m_fX && x <= m_pMap.back()->GetPos().m_fX)
+		&& (y >= m_pMap.front()->GetPos().m_fY && y <= m_pMap.back()->GetPos().m_fY))
 	{
 		while (iter != end)
 		{
-			if ((*iter)->GetPos().m_fX == x && (*iter)->GetPos().m_fY== y)
+			if ((*iter)->GetPos().m_fX == x && (*iter)->GetPos().m_fY == y)
 			{
 				if ((*iter)->GetType() == IMG_MINE)
 				{
@@ -86,7 +102,9 @@ bool Map::CheckBlock(int x, int y)	  //營敝
 
 					(*iter)->SetClick(true);
 					m_iNoneCount--;
-					int Num = SearchMine(x, y);
+
+					int Num = MineNumber(x, y);
+
 					if (Num == 0)
 					{
 						for (int i = -1; i <= 1; i++)
@@ -98,7 +116,7 @@ bool Map::CheckBlock(int x, int y)	  //營敝
 							}
 						}
 					}
-					else 
+					else
 					{
 						return true;
 					}
@@ -106,11 +124,11 @@ bool Map::CheckBlock(int x, int y)	  //營敝
 			}
 			iter++;
 		}
-		return true;
 	}
+	return true;
 }
 
-int Map::SearchMine(int x, int y)
+int Map::MineNumber(int x, int y)
 {
 	vector<Block*>::iterator iter = m_pMap.begin();
 	vector<Block*>::iterator end = m_pMap.end();
@@ -150,6 +168,21 @@ int Map::SearchMine(int x, int y)
 	}
 }
 
+bool Map::SearchMine(int x, int y)
+{
+	for (int i = 0; i < m_pMap.size(); i++)
+	{
+		if (m_pMap.at(i)->GetPos().m_fX == x && m_pMap.at(i)->GetPos().m_fY == y)
+		{
+			if (m_pMap.at(i)->GetType() == IMG_MINE)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool Map::Collision(POINT pos, MOUSE button)
 {
 	for (int i = 0; i < m_pMap.size(); i++)
@@ -184,6 +217,14 @@ void Map::OpenMine()
 	{
 		if(m_pMap.at(i)->GetType() == IMG_MINE)
 			m_pMap.at(i)->SetClick(true);
+	}
+}
+
+void Map::CloseBlock()
+{
+	for (int i = 0; i < m_pMap.size(); i++)
+	{
+		m_pMap.at(i)->SetClick(false);
 	}
 }
 

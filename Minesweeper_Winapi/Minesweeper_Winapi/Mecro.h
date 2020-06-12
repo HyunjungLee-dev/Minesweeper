@@ -7,7 +7,7 @@
 using namespace std;
 
 
-#define DEFULTMINE 99
+#define DEFULTMINE 30
 #define HEIGHT 16
 #define WIDTH 30
 
@@ -53,11 +53,11 @@ enum IMG
 enum GAMESTATE
 {
 	GAME_WAIT,
-	GAME_INIT,
+	GAME_RESET,
 	GAME_START,
 	GAME_STOP,
 	GAME_DIE,
-	GAME_RE,
+	GAME_REPLAY,
 	GAME_PLAY,
-	GAME_END
+	GAME_WIN
 };

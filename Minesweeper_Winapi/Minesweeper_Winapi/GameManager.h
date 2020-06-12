@@ -24,6 +24,7 @@ private:
 public:
 	//Init
 	void Init(HWND hWnd);
+	void ReStart(GAMESTATE state);
 
 	//Update
 	void Update();

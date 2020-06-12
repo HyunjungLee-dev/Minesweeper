@@ -27,6 +27,30 @@ void GameManager::Init(HWND hWnd)
 
 }
 
+void GameManager::ReStart(GAMESTATE state)
+{
+	m_iFlagCount = 0;
+	m_iMineCount = DEFULTMINE;
+	m_SecTime = 0;
+	m_eState = GAME_WAIT;
+
+	m_dwLastTime = GetTickCount();
+	m_dwCurTime = GetTickCount();
+
+
+	if (state == GAME_REPLAY)
+	{
+		m_FlagList.clear();
+		m_Map.CloseBlock();
+	}
+	else if (state == GAME_RESET)
+	{
+		m_FlagList.clear();
+		m_Map.Release();
+		m_Map.Init(m_ClientRct.right * 0.02, m_ClientRct.bottom * 0.04, m_backbufferDC);
+	}
+}
+
 void GameManager::Update()
 {
 	m_dwCurTime = GetTickCount();
@@ -39,6 +63,8 @@ void GameManager::Update()
 		m_dwLastTime = m_dwCurTime;
 	}
 
+	if (m_Map.GetNoneCount() == m_FlagList.size() && m_iMineCount == 0)
+		m_eState = GAME_WIN;
 
 	if (m_eState == GAME_DIE)
 	{
@@ -139,6 +165,7 @@ void GameManager::Text()
 
 void GameManager::Release()
 {
+	m_FlagList.clear();
 	m_Map.Release();
 	BitmapManager::GetSingleton()->Release();
 	BitmapManager::Release();

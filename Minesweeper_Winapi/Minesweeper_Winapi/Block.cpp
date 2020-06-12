@@ -42,7 +42,10 @@ void None::DrawBlock(HDC hdc)
 
 void Number::DrawBlock(HDC hdc)
 {
-	BitmapManager::GetSingleton()->GetImg(m_eblockType)->Draw(hdc, m_pos.m_fX, m_pos.m_fY);
+	if (!m_bClick)
+		BitmapManager::GetSingleton()->GetImg(IMG_BLOCK)->Draw(hdc, m_pos.m_fX, m_pos.m_fY);
+	else
+		BitmapManager::GetSingleton()->GetImg(m_eblockType)->Draw(hdc, m_pos.m_fX, m_pos.m_fY);
 }
 
 
