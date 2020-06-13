@@ -11,6 +11,8 @@ class Map
 	int m_iMineCount;
 	bool m_MineCheck;
 
+	int sizeX, sizeY;
+
 
 	HDC m_backbufferDC;
 	POS m_BlockPos;
@@ -20,10 +22,13 @@ public:
 	void SetMine(int startX, int startY);
 
 
-	bool CheckBlock(int x, int y);
+	void CheckBlock(int x, int y);
+
+
 	void ChageBlock(Block* block);
 	bool SearchMine(int x, int y);
 	int MineNumber(int x, int y);
+	
 	void OpenMine();
 	void CloseBlock();
 

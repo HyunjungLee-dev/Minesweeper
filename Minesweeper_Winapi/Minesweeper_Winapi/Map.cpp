@@ -78,94 +78,86 @@ void Map::ChageBlock(Block* block)
 
 }
 
-bool Map::CheckBlock(int x, int y)	  
+
+
+void Map::CheckBlock(int x, int y)
 {
-	vector<Block*>::iterator iter = m_pMap.begin();
-	vector<Block*>::iterator end = m_pMap.end();
+	if (x < m_pMap.front()->GetPos().m_fX || x > m_pMap.back()->GetPos().m_fX
+		|| y < m_pMap.front()->GetPos().m_fY || y > m_pMap.back()->GetPos().m_fY)
+		return;
 
-	if ((x >= m_pMap.front()->GetPos().m_fX && x <= m_pMap.back()->GetPos().m_fX)
-		&& (y >= m_pMap.front()->GetPos().m_fY && y <= m_pMap.back()->GetPos().m_fY))
+	
+
+	for (int i = 0; i < m_pMap.size(); i++)
 	{
-		while (iter != end)
+		if (m_pMap[i]->GetPos().m_fX == x && m_pMap[i]->GetPos().m_fY == y)
 		{
-			if ((*iter)->GetPos().m_fX == x && (*iter)->GetPos().m_fY == y)
+			if (m_pMap[i]->GetType() == IMG_MINE)
 			{
-				if ((*iter)->GetType() == IMG_MINE)
+				break;
+				return;
+			}
+			else
+			{
+				sizeX = BitmapManager::GetSingleton()->GetImg(m_pMap.at(i)->GetType())->GetSize().cx;
+				sizeY = BitmapManager::GetSingleton()->GetImg(m_pMap.at(i)->GetType())->GetSize().cy;
+
+				if (!m_pMap[i]->GetClick())
 				{
-					(*iter)->SetClick(true);
-					return false;
-				}
-				else
-				{
-					int sizeX = BitmapManager::GetSingleton()->GetImg((*iter)->GetType())->GetSize().cx;
-					int sizeY = BitmapManager::GetSingleton()->GetImg((*iter)->GetType())->GetSize().cy;
-
-					(*iter)->SetClick(true);
-					m_iNoneCount--;
-
-					int Num = MineNumber(x, y);
-
-					if (Num == 0)
+					if (MineNumber(x, y) == 0)
 					{
-						for (int i = -1; i <= 1; i++)
+						for (int k = -1; k <= 1; k++)
 						{
 							for (int j = -1; j <= 1; j++)
 							{
-								if (CheckBlock(x + i * sizeX, y + j * sizeY))
-									break;
+								m_pMap[i]->SetClick(true);
+								m_iNoneCount--;
+
+								 CheckBlock(x + k * sizeX, y + j * sizeY);
+
 							}
 						}
 					}
-					else
-					{
-						return true;
-					}
+					break;
 				}
 			}
-			iter++;
+			return;
+
 		}
 	}
-	return true;
 }
 
 int Map::MineNumber(int x, int y)
 {
-	vector<Block*>::iterator iter = m_pMap.begin();
-	vector<Block*>::iterator end = m_pMap.end();
 
 	int mineNum = 0;
-	if (!m_pMap.empty())
-	{
-		while (iter != end)
-		{
-			int sizeX = BitmapManager::GetSingleton()->GetImg((*iter)->GetType())->GetSize().cx;
-			int sizeY = BitmapManager::GetSingleton()->GetImg((*iter)->GetType())->GetSize().cy;
 
-			if ((*iter)->GetPos().m_fX == x - sizeX && (*iter)->GetPos().m_fY == y + sizeY && (*iter)->GetType() == IMG_MINE) mineNum++; //ºÏ¼­
-			if ((*iter)->GetPos().m_fX == x && (*iter)->GetPos().m_fY == y + sizeY && (*iter)->GetType() == IMG_MINE) mineNum++; //ºÏ
-			if ((*iter)->GetPos().m_fX == x + sizeX && (*iter)->GetPos().m_fY == y + sizeY && (*iter)->GetType() == IMG_MINE) mineNum++; //ºÏµ¿
-			if ((*iter)->GetPos().m_fX == x - sizeX && (*iter)->GetPos().m_fY == y && (*iter)->GetType() == IMG_MINE) mineNum++; //¼­
-			if ((*iter)->GetPos().m_fX == x + sizeX && (*iter)->GetPos().m_fY == y && (*iter)->GetType() == IMG_MINE) mineNum++; //µ¿
-			if ((*iter)->GetPos().m_fX == x - sizeX && (*iter)->GetPos().m_fY == y - sizeY && (*iter)->GetType() == IMG_MINE) mineNum++; //³²¼­
-			if ((*iter)->GetPos().m_fX == x && (*iter)->GetPos().m_fY == y - sizeY && (*iter)->GetType() == IMG_MINE) mineNum++; //³²
-			if ((*iter)->GetPos().m_fX == x + sizeX && (*iter)->GetPos().m_fY == y - sizeY && (*iter)->GetType() == IMG_MINE)//³²µ¿
-			{
-				mineNum++;
-			}
-			iter++;
-		}
-		if (mineNum == 0)
-			return mineNum;
-		else
+	for(int i=0; i<m_pMap.size(); i++)
+	{
+		if (m_pMap.at(i)->GetPos().m_fX == x - sizeX && m_pMap.at(i)->GetPos().m_fY == y + sizeY && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //ºÏ¼­
+		if (m_pMap.at(i)->GetPos().m_fX == x && m_pMap.at(i)->GetPos().m_fY == y + sizeY && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //ºÏ
+		if (m_pMap.at(i)->GetPos().m_fX == x + sizeX && m_pMap.at(i)->GetPos().m_fY == y + sizeY && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //ºÏµ¿
+		if (m_pMap.at(i)->GetPos().m_fX == x - sizeX && m_pMap.at(i)->GetPos().m_fY == y && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //¼­
+		if (m_pMap.at(i)->GetPos().m_fX == x + sizeX && m_pMap.at(i)->GetPos().m_fY == y && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //µ¿
+		if (m_pMap.at(i)->GetPos().m_fX == x - sizeX && m_pMap.at(i)->GetPos().m_fY == y - sizeY && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //³²¼­
+		if (m_pMap.at(i)->GetPos().m_fX == x && m_pMap.at(i)->GetPos().m_fY == y - sizeY && m_pMap.at(i)->GetType() == IMG_MINE) mineNum++; //³²
+		if (m_pMap.at(i)->GetPos().m_fX == x + sizeX && m_pMap.at(i)->GetPos().m_fY == y - sizeY && m_pMap.at(i)->GetType() == IMG_MINE)//³²µ¿
 		{
-			Block* block;
-			block = m_pFactory->MakeNumber((IMG)mineNum);
-			block->Setpos(x, y);
-			block->SetClick(true);
-			ChageBlock(block);
-			return mineNum;
+			mineNum++;
 		}
 	}
+	
+	
+	if (mineNum != 0)
+	{
+		Block* block;
+		block = m_pFactory->MakeNumber((IMG)mineNum);
+		block->Setpos(x, y);
+		block->SetClick(true);
+		ChageBlock(block);
+	}
+	return mineNum;
+	
 }
 
 bool Map::SearchMine(int x, int y)
@@ -191,11 +183,15 @@ bool Map::Collision(POINT pos, MOUSE button)
 		{
 			if (button == LBUTTONDOWN)
 			{
-				if (!CheckBlock(m_pMap.at(i)->GetPos().m_fX, m_pMap.at(i)->GetPos().m_fY))
+				if (m_pMap.at(i)->GetType() == IMG_MINE)
 				{
+					m_pMap.at(i)->SetClick(true);
 					return false;
 				}
-
+				else
+				{
+					CheckBlock(m_pMap.at(i)->GetPos().m_fX, m_pMap.at(i)->GetPos().m_fY);
+				}	return true;
 			}
 			else
 			{

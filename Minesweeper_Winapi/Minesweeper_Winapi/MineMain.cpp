@@ -1,7 +1,7 @@
 #include"GameManager.h"
 #include"resource.h"
-BOOL CALLBACK EndDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK EndDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = TEXT("Áö·Ú Ã£±â");
@@ -94,50 +94,50 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
 
-BOOL CALLBACK EndDlgProc( HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK EndDlgProc( HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
-		return TRUE;
+		return (INT_PTR)TRUE;
 
 	case WM_COMMAND:
 		switch (wParam)
 		{
 		case IDC_BUTTON1:
 			PostQuitMessage(0);
-			return TRUE;
+			return (INT_PTR)TRUE;
 		case IDC_BUTTON2:
 			g_game.ReStart(GAME_REPLAY);
 			EndDialog(hDlg, 0);
-			return TRUE;
+			return (INT_PTR)TRUE;
 		case IDC_BUTTON3:
 			g_game.ReStart(GAME_RESET);
 			EndDialog(hDlg, 0);
-			return TRUE;
+			return (INT_PTR)TRUE;
 		}
 	}
-	return FALSE;
+	return(INT_PTR)FALSE;
 }
 
-BOOL CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
-		return TRUE;
+		return (INT_PTR)TRUE;
 
 	case WM_COMMAND:
 		switch (wParam)
 		{
 		case IDC_WINBUTTON1:
 			PostQuitMessage(0);
-			return TRUE;
+			return (INT_PTR)TRUE;
 		case IDC_WINBUTTON2:
 			g_game.ReStart(GAME_RESET);
 			EndDialog(hDlg, 0);
-			return TRUE;
+			return (INT_PTR)TRUE;
 		}
 	}
-	return FALSE;
+	return (INT_PTR)FALSE;
 }
