@@ -111,8 +111,6 @@ void Map::CheckBlock(int x, int y)
 							for (int j = -1; j <= 1; j++)
 							{
 								m_pMap[i]->SetClick(true);
-								m_iNoneCount--;
-
 								 CheckBlock(x + k * sizeX, y + j * sizeY);
 
 							}
@@ -156,6 +154,7 @@ int Map::MineNumber(int x, int y)
 		block->SetClick(true);
 		ChageBlock(block);
 	}
+	m_iNoneCount--;
 	return mineNum;
 	
 }

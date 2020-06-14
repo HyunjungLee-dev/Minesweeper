@@ -44,6 +44,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 		}
 		else
 		{
+
 			//Update
 			g_game.Update();
 			if (g_game.StateCheck() == GAME_DIE)
@@ -94,13 +95,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
 
+
+
 INT_PTR CALLBACK EndDlgProc( HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	TCHAR str[128];
+	wsprintf(str, TEXT("시간: %d초"), g_game.GetSecTime());
+
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
+		SetDlgItemText(hDlg, IDC_MES, str);
 		return (INT_PTR)TRUE;
-
 	case WM_COMMAND:
 		switch (wParam)
 		{
@@ -122,9 +128,13 @@ INT_PTR CALLBACK EndDlgProc( HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 INT_PTR CALLBACK WinDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	TCHAR str[128];
+	wsprintf(str, TEXT("시간: %d초"), g_game.GetSecTime());
+
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
+		SetDlgItemText(hDlg, IDC_MES2, str);
 		return (INT_PTR)TRUE;
 
 	case WM_COMMAND:

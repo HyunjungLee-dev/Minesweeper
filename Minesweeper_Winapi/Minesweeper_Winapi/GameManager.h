@@ -40,6 +40,8 @@ public:
 	//Release
 	void Release();
 
+	int GetSecTime() { return m_SecTime; }
+
 	GameManager();
 	~GameManager();
 };

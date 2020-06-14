@@ -7,7 +7,7 @@
 using namespace std;
 
 
-#define DEFULTMINE 99
+#define DEFULTMINE 5
 #define HEIGHT 16
 #define WIDTH 30
 

@@ -11,6 +11,8 @@
 #define IDC_WINBUTTON2                  1007
 #define IDC_BUTTON2                     1008
 #define IDC_BUTTON1                     1009
+#define IDC_MES                         1012
+#define IDC_MES2                        1013
 #define ID_NEW                          40001
 #define ID_HELP                         40002
 #define ID_ANOTHER                      40003
@@ -20,9 +22,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        111
+#define _APS_NEXT_RESOURCE_VALUE        113
 #define _APS_NEXT_COMMAND_VALUE         40005
-#define _APS_NEXT_CONTROL_VALUE         1008
+#define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

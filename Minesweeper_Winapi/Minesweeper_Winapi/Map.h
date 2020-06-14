@@ -23,6 +23,7 @@ public:
 
 
 	void CheckBlock(int x, int y);
+	//void CheckBlockTail(int x, int y);
 
 
 	void ChageBlock(Block* block);
@@ -30,6 +31,7 @@ public:
 	int MineNumber(int x, int y);
 	
 	void OpenMine();
+	//void OpenMine(int x, int y);
 	void CloseBlock();
 
 	bool Collision(POINT pos, MOUSE button);
